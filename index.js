@@ -38,8 +38,18 @@ const server = http.createServer((req, res) =>{
     else if(pathName === '/product'){
         res.end('this is a product');
     }
+    else if(pathName === '/api'){
+        fs.readFile(`${__dirname}/dev-data/data.json`, 'utf-8', (err, data) => {
+            const dataObj = JSON.parse(data)
+            console.log(dataObj)
+        });
+        res.end('API');
+    }
     else{
-        res.end('page not found');
+        res.writeHead(404, {
+            'Content-type': 'text/html'
+        })
+        res.end('<h1>page not found</h1>');
     }
 })
     server.listen(8000, '127.0.0.1', () =>{
